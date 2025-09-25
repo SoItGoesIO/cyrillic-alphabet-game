@@ -1,0 +1,13 @@
+*** a/src/auth/session.js
+--- b/src/auth/session.js
+@@
+ export async function ensureAuthed() {
+   const s = await getSession();
+-  if (!s) document.body.classList.add('needs-auth');
+-  else document.body.classList.remove('needs-auth');
+-  return !!s;
++  const authed = !!s;
++  document.body.classList.toggle('needs-auth', !authed);
++  document.body.classList.toggle('is-authed', authed);
++  return authed;
+ }

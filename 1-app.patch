@@ -1,0 +1,69 @@
+*** a/src/app.js
+--- b/src/app.js
+@@
+-import { ensureAuthed, onAuth } from './auth/session.js';
++import { ensureAuthed, onAuth } from './auth/session.js';
++import { supa } from './supa.js';
+ import { listItems, createItem } from './db/items.js';
+ import { fetchProfile } from './db/profiles.js';
+ import { completeItemAndAwardXP } from './gamification/xp.js';
+ import { toast } from './ui/render.js';
+@@
+-    ul.innerHTML = (data || []).map(i => `
+-      <li class="flex justify-between items-center p-3 bg-white rounded-lg shadow-sm border ${i.status === 'done' ? 'opacity-60' : ''}">
++    ul.innerHTML = (data || []).map(i => `
++      <li class="flex justify-between items-center p-3 bg-white rounded-lg shadow-sm border ${i.status === 'completed' ? 'opacity-60' : ''}">
+         <div>
+-          <span class="font-medium ${i.status === 'done' ? 'line-through text-gray-500' : 'text-gray-800'}">${i.title}</span>
++          <span class="font-medium ${i.status === 'completed' ? 'line-through text-gray-500' : 'text-gray-800'}">${i.title}</span>
+           ${i.description ? `<div class="text-sm text-gray-600">${i.description}</div>` : ''}
+         </div>
+         <button 
+           data-complete="${i.id}" 
+-          ${i.status === 'done' ? 'disabled' : ''}
++          ${i.status === 'completed' ? 'disabled' : ''}
+           class="px-3 py-1 text-sm rounded font-medium transition-colors ${
+-            i.status === 'done' 
++            i.status === 'completed' 
+               ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
+               : 'bg-green-600 text-white hover:bg-green-700'
+           }"
+         >
+-          ${i.status === 'done' ? 'Done' : `Complete (+${i.xp_reward} XP)`}
++          ${i.status === 'completed' ? 'Done' : `Complete (+${i.xp_reward ?? 10} XP)`}
+         </button>
+       </li>
+     `).join('');
+@@
+-    try {
+-      const res = await completeItemAndAwardXP(id);
+-      toast(`+${res.totalXP - (await fetchProfile()).total_xp + 10} XP!`);
++    try {
++      const before = await fetchProfile();
++      const res = await completeItemAndAwardXP(id); // { totalXP, level, reward }
++      const gained = res.reward ?? Math.max(0, (res.totalXP ?? 0) - (before.total_xp ?? 0));
++      toast(`+${gained} XP`);
+       await renderHeader();
+       await renderTodos();
+     } catch (error) {
+@@
+-    try {
+-      await createItem({ 
+-        title, 
+-        status: 'open', 
+-        xp_reward: 10,
+-        description: e.target.description?.value?.trim() || null
+-      });
++    try {
++      const { data: u } = await supa.auth.getUser();
++      if (!u?.user?.id) throw new Error('Not authenticated');
++      await createItem({ 
++        user_id: u.user.id,
++        title, 
++        description: e.target.description?.value?.trim() || null,
++        status: 'created',   // enum: created | in_progress | completed
++        xp_reward: 10
++      });
+       e.target.reset();
+       await renderTodos();
+       toast('Task added!');

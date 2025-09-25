@@ -1,0 +1,39 @@
+export const LETTERS = [
+  { cyrillic: 'А', latin: 'A', sound: 'ah', audio: '01.mp3' },
+  { cyrillic: 'Б', latin: 'B', sound: 'beh', audio: '02.mp3' },
+  { cyrillic: 'В', latin: 'V', sound: 'veh', audio: '03.mp3' },
+  { cyrillic: 'Г', latin: 'G', sound: 'geh', audio: '04.mp3' },
+  { cyrillic: 'Д', latin: 'D', sound: 'deh', audio: '05.mp3' },
+  { cyrillic: 'Е', latin: 'E', sound: 'yeh', audio: '06.mp3' },
+  { cyrillic: 'Ё', latin: 'Yo', sound: 'yoh', audio: '07.mp3' },
+  { cyrillic: 'Ж', latin: 'Zh', sound: 'zheh', audio: '08.mp3' },
+  { cyrillic: 'З', latin: 'Z', sound: 'zeh', audio: '09.mp3' },
+  { cyrillic: 'И', latin: 'I', sound: 'ee', audio: '10.mp3' },
+  { cyrillic: 'Й', latin: 'Y', sound: 'ee kratkoye', audio: '11.mp3' },
+  { cyrillic: 'К', latin: 'K', sound: 'kah', audio: '12.mp3' },
+  { cyrillic: 'Л', latin: 'L', sound: 'el', audio: '13.mp3' },
+  { cyrillic: 'М', latin: 'M', sound: 'em', audio: '14.mp3' },
+  { cyrillic: 'Н', latin: 'N', sound: 'en', audio: '15.mp3' },
+  { cyrillic: 'О', latin: 'O', sound: 'oh', audio: '16.mp3' },
+  { cyrillic: 'П', latin: 'P', sound: 'peh', audio: '17.mp3' },
+  { cyrillic: 'Р', latin: 'R', sound: 'er', audio: '18.mp3' },
+  { cyrillic: 'С', latin: 'S', sound: 'es', audio: '19.mp3' },
+  { cyrillic: 'Т', latin: 'T', sound: 'teh', audio: '20.mp3' },
+  { cyrillic: 'У', latin: 'U', sound: 'oo', audio: '21.mp3' },
+  { cyrillic: 'Ф', latin: 'F', sound: 'ef', audio: '22.mp3' },
+  { cyrillic: 'Х', latin: 'Kh', sound: 'khah', audio: '23.mp3' },
+  { cyrillic: 'Ц', latin: 'Ts', sound: 'tseh', audio: '24.mp3' },
+  { cyrillic: 'Ч', latin: 'Ch', sound: 'cheh', audio: '25.mp3' },
+  { cyrillic: 'Ш', latin: 'Sh', sound: 'shah', audio: '26.mp3' },
+  { cyrillic: 'Щ', latin: 'Shch', sound: 'shchah', audio: '27.mp3' },
+  { cyrillic: 'Ъ', latin: '"', sound: 'hard sign', audio: '28.mp3' },
+  { cyrillic: 'Ы', latin: 'Y', sound: 'yih', audio: '29.mp3' },
+  { cyrillic: 'Ь', latin: "'", sound: 'soft sign', audio: '30.mp3' },
+  { cyrillic: 'Э', latin: 'E', sound: 'eh', audio: '31.mp3' },
+  { cyrillic: 'Ю', latin: 'Yu', sound: 'yoo', audio: '32.mp3' },
+  { cyrillic: 'Я', latin: 'Ya', sound: 'yah', audio: '33.mp3' }
+];
+
+export function findLetter(cyrillic) {
+  return LETTERS.find(letter => letter.cyrillic === cyrillic);
+}

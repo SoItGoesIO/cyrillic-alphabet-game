@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Database Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-4">🗄️ Supabase Database Admin Panel</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <button id="load-profiles" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    👤 Load Profiles
+                </button>
+                <button id="load-items" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                    📝 Load Items
+                </button>
+                <button id="load-sessions" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                    🎯 Load Quiz Sessions
+                </button>
+            </div>
+
+            <div class="mb-4">
+                <button id="refresh-all" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors mr-2">
+                    🔄 Refresh All Data
+                </button>
+                <button id="clear-display" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+                    🗑️ Clear Display
+                </button>
+            </div>
+        </div>
+
+        <!-- Current User Info -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">🔐 Current Authentication Status</h2>
+            <div id="auth-info" class="text-gray-600">
+                Loading authentication status...
+            </div>
+        </div>
+
+        <!-- Data Display Area -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Profiles -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3">👤 User Profiles</h2>
+                <div id="profiles-data" class="text-sm">
+                    <p class="text-gray-500">Click "Load Profiles" to view data</p>
+                </div>
+            </div>
+
+            <!-- Items -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3">📝 Todo Items</h2>
+                <div id="items-data" class="text-sm">
+                    <p class="text-gray-500">Click "Load Items" to view data</p>
+                </div>
+            </div>
+
+            <!-- Quiz Sessions -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3">🎯 Quiz Sessions</h2>
+                <div id="sessions-data" class="text-sm">
+                    <p class="text-gray-500">Click "Load Quiz Sessions" to view data</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Raw Data Display -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mt-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">📊 Raw Data</h2>
+            <pre id="raw-data" class="bg-gray-100 p-4 rounded-lg text-xs overflow-auto max-h-96 whitespace-pre-wrap"></pre>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+        // Supabase configuration
+        const SUPABASE_URL = 'https://ohhgmkiwkyntanzgetxv.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oaGdta2l3a3ludGFuemdldHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg3MjQyMDIsImV4cCI6MjA3NDMwMDIwMn0.DcfhXBWwz788rEoiD2-350NrcmWcBcpzqJqmhFwf95Q';
+
+        const supa = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Admin access check - redirect if not authenticated or not admin
+        async function checkAdminAccess() {
+            try {
+                const { data: { user }, error: userError } = await supa.auth.getUser();
+                
+                if (userError || !user) {
+                    console.log('Not authenticated, redirecting to home');
+                    location.href = '/';
+                    return false;
+                }
+
+                const { data: profile, error: profileError } = await supa
+                    .from('profiles')
+                    .select('is_admin')
+                    .single();
+
+                if (profileError) {
+                    console.error('Failed to check admin status:', profileError);
+                    location.href = '/';
+                    return false;
+                }
+
+                if (!profile?.is_admin) {
+                    console.log('User is not an admin, redirecting to home');
+                    location.href = '/';
+                    return false;
+                }
+
+                return true;
+            } catch (error) {
+                console.error('Admin access check failed:', error);
+                location.href = '/';
+                return false;
+            }
+        }
+
+        // Initialize admin panel only if user has access
+        const hasAccess = await checkAdminAccess();
+        if (!hasAccess) {
+            // Script will terminate here due to redirect
+        }
+
+        // DOM elements
+        const authInfo = document.getElementById('auth-info');
+        const profilesData = document.getElementById('profiles-data');
+        const itemsData = document.getElementById('items-data');
+        const sessionsData = document.getElementById('sessions-data');
+        const rawData = document.getElementById('raw-data');
+
+        // Helper function to format data for display
+        function formatData(data, tableName) {
+            if (!data || data.length === 0) {
+                return `<p class="text-gray-500">No ${tableName} found</p>`;
+            }
+
+            let html = `<p class="font-semibold text-gray-700 mb-2">Total: ${data.length} records</p>`;
+            
+            data.forEach((item, index) => {
+                html += `<div class="border-b border-gray-200 py-2 mb-2">`;
+                html += `<p class="font-medium text-gray-800">#${index + 1}</p>`;
+                
+                Object.entries(item).forEach(([key, value]) => {
+                    let displayValue = value;
+                    
+                    // Format dates
+                    if (key.includes('_at') && value) {
+                        displayValue = new Date(value).toLocaleString();
+                    }
+                    
+                    // Truncate long values
+                    if (typeof value === 'string' && value.length > 50) {
+                        displayValue = value.substring(0, 47) + '...';
+                    }
+                    
+                    html += `<p class="text-xs"><strong>${key}:</strong> ${displayValue || 'null'}</p>`;
+                });
+                html += `</div>`;
+            });
+            
+            return html;
+        }
+
+        // Load profiles
+        async function loadProfiles() {
+            try {
+                profilesData.innerHTML = '<p class="text-blue-500">Loading...</p>';
+                
+                const { data, error } = await supa
+                    .from('profiles')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    profilesData.innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+                    rawData.textContent += `\nProfiles Error: ${JSON.stringify(error, null, 2)}`;
+                } else {
+                    profilesData.innerHTML = formatData(data, 'profiles');
+                    rawData.textContent += `\n\nPROFILES:\n${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (err) {
+                profilesData.innerHTML = `<p class="text-red-500">Exception: ${err.message}</p>`;
+            }
+        }
+
+        // Load items
+        async function loadItems() {
+            try {
+                itemsData.innerHTML = '<p class="text-blue-500">Loading...</p>';
+                
+                const { data, error } = await supa
+                    .from('items')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    itemsData.innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+                    rawData.textContent += `\nItems Error: ${JSON.stringify(error, null, 2)}`;
+                } else {
+                    itemsData.innerHTML = formatData(data, 'items');
+                    rawData.textContent += `\n\nITEMS:\n${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (err) {
+                itemsData.innerHTML = `<p class="text-red-500">Exception: ${err.message}</p>`;
+            }
+        }
+
+        // Load quiz sessions
+        async function loadSessions() {
+            try {
+                sessionsData.innerHTML = '<p class="text-blue-500">Loading...</p>';
+                
+                const { data, error } = await supa
+                    .from('quiz_sessions')
+                    .select('*')
+                    .order('started_at', { ascending: false });
+
+                if (error) {
+                    sessionsData.innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+                    rawData.textContent += `\nQuiz Sessions Error: ${JSON.stringify(error, null, 2)}`;
+                } else {
+                    sessionsData.innerHTML = formatData(data, 'quiz sessions');
+                    rawData.textContent += `\n\nQUIZ SESSIONS:\n${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (err) {
+                sessionsData.innerHTML = `<p class="text-red-500">Exception: ${err.message}</p>`;
+            }
+        }
+
+        // Check authentication status
+        async function checkAuth() {
+            try {
+                const { data: { session } } = await supa.auth.getSession();
+                const { data: { user } } = await supa.auth.getUser();
+                
+                if (session && user) {
+                    // Get admin status
+                    const { data: profile } = await supa
+                        .from('profiles')
+                        .select('is_admin, total_xp, level')
+                        .single();
+                    
+                    authInfo.innerHTML = `
+                        <p class="text-green-600 font-semibold">✅ Authenticated (ADMIN)</p>
+                        <p><strong>User ID:</strong> ${user.id}</p>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>XP/Level:</strong> ${profile?.total_xp || 0} XP, Level ${profile?.level || 1}</p>
+                        <p><strong>Admin Status:</strong> ${profile?.is_admin ? 'Yes' : 'No'}</p>
+                        <p><strong>Created:</strong> ${new Date(user.created_at).toLocaleString()}</p>
+                        <p><strong>Last Sign In:</strong> ${user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString() : 'Never'}</p>
+                    `;
+                } else {
+                    authInfo.innerHTML = `
+                        <p class="text-red-500 font-semibold">❌ Not authenticated</p>
+                        <p class="text-sm text-gray-600">You need to be logged in to view user-specific data</p>
+                    `;
+                }
+                
+                rawData.textContent = `AUTHENTICATION STATUS:\n${JSON.stringify({ session: !!session, user }, null, 2)}`;
+            } catch (err) {
+                authInfo.innerHTML = `<p class="text-red-500">Auth check failed: ${err.message}</p>`;
+            }
+        }
+
+        // Event listeners
+        document.getElementById('load-profiles').onclick = loadProfiles;
+        document.getElementById('load-items').onclick = loadItems;
+        document.getElementById('load-sessions').onclick = loadSessions;
+        
+        document.getElementById('refresh-all').onclick = async () => {
+            rawData.textContent = 'Refreshing all data...';
+            await checkAuth();
+            await loadProfiles();
+            await loadItems();
+            await loadSessions();
+        };
+        
+        document.getElementById('clear-display').onclick = () => {
+            profilesData.innerHTML = '<p class="text-gray-500">Click "Load Profiles" to view data</p>';
+            itemsData.innerHTML = '<p class="text-gray-500">Click "Load Items" to view data</p>';
+            sessionsData.innerHTML = '<p class="text-gray-500">Click "Load Quiz Sessions" to view data</p>';
+            rawData.textContent = '';
+        };
+
+        // Initial load
+        checkAuth();
+    </script>
+</body>
+</html>

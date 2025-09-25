@@ -1,0 +1,15 @@
+*** a/index.html
+--- b/index.html
+@@
+     <style>
+       body {
+@@
+       .needs-auth #supabase-test {
+         display: block;
+       }
++      /* Auth UI defaults for predictable first paint */
++      .is-authed #supabase-test { display: none; }
++      .is-authed #app-content { display: block; }
++      #supabase-test { display: block; }
++      #app-content { display: none; }
+     </style>
