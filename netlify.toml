@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+  command = ""
+
+# Optional: cache headers for your audio files
+[[headers]]
+  for = "/audio/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

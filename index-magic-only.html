@@ -34,36 +34,16 @@
                 placeholder="your@email.com"
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
-            <input 
-                id="password-input" 
-                type="password" 
-                placeholder="password (6+ chars)"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
             <div class="flex gap-2">
-                <button 
-                    id="signup-btn"
-                    class="flex-1 py-2 px-4 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
-                >
-                    📝 Sign Up
-                </button>
                 <button 
                     id="login-btn"
                     class="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                 >
-                    🔐 Sign In
-                </button>
-            </div>
-            <div class="flex gap-2">
-                <button 
-                    id="magic-btn"
-                    class="flex-1 py-2 px-4 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
-                >
-                    ✨ Magic Link
+                    🔐 Sign in (magic link)
                 </button>
                 <button 
                     id="logout-btn"
-                    class="flex-1 py-2 px-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors"
+                    class="py-2 px-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors"
                 >
                     🚪 Sign out
                 </button>
@@ -94,62 +74,15 @@
         // Create global client
         window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-        // Get elements
-        const signupBtn = document.getElementById('signup-btn')
+        // Smoke test setup
         const loginBtn = document.getElementById('login-btn')
-        const magicBtn = document.getElementById('magic-btn')
         const logoutBtn = document.getElementById('logout-btn')
         const itemsBtn = document.getElementById('items-btn')
         const emailInput = document.getElementById('email-input')
-        const passwordInput = document.getElementById('password-input')
         const output = document.getElementById('output')
         const authStatus = document.getElementById('auth-status')
 
-        // Sign up with email/password
-        signupBtn.onclick = async () => {
-            const email = emailInput.value.trim()
-            const password = passwordInput.value.trim()
-            
-            if (!email || !password) return alert('Fill email and password')
-            if (password.length < 6) return alert('Password must be 6+ characters')
-            
-            output.textContent = 'Creating account...'
-            
-            const { data, error } = await window.supabase.auth.signUp({
-                email,
-                password
-            })
-            
-            if (error) {
-                output.textContent = 'Signup error: ' + error.message
-            } else {
-                output.textContent = '✅ Account created! You might need to check email for confirmation.'
-            }
-        }
-
-        // Sign in with email/password
         loginBtn.onclick = async () => {
-            const email = emailInput.value.trim()
-            const password = passwordInput.value.trim()
-            
-            if (!email || !password) return alert('Fill email and password')
-            
-            output.textContent = 'Signing in...'
-            
-            const { data, error } = await window.supabase.auth.signInWithPassword({
-                email,
-                password
-            })
-            
-            if (error) {
-                output.textContent = 'Login error: ' + error.message
-            } else {
-                output.textContent = '✅ Signed in successfully!'
-            }
-        }
-
-        // Magic link (original)
-        magicBtn.onclick = async () => {
             const email = emailInput.value.trim()
             if (!email) return alert('Fill email first')
             
@@ -157,7 +90,7 @@
             const { error } = await window.supabase.auth.signInWithOtp({ email })
             
             if (error) {
-                output.textContent = 'Magic link error: ' + error.message
+                output.textContent = 'Login error: ' + error.message
             } else {
                 output.textContent = '✅ Magic link sent! Check your email and click the link.'
             }
