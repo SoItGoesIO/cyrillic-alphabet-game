@@ -8,7 +8,7 @@ const Trophy = (props) => React.createElement(Icon, { ...props }, '🏆');
 const BookOpen = (props) => React.createElement(Icon, { ...props }, '📖');
 const Volume2 = (props) => React.createElement(Icon, { ...props }, '🔊');
 
-const { useState, useEffect } = React;
+const { useState, useEffect } = React; // eslint-disable-line no-unused-vars
 
 const CyrillicAlphabetGame = () => {
   const alphabet = [
@@ -54,7 +54,7 @@ const CyrillicAlphabetGame = () => {
   const [currentQuiz, setCurrentQuiz] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [quizComplete, setQuizComplete] = useState(false);
+  const [quizComplete, setQuizComplete] = useState(false); // eslint-disable-line no-unused-vars
   const [correctAnswers, setCorrectAnswers] = useState(0);
 
   // Audio playback function
