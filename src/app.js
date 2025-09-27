@@ -3,6 +3,7 @@ import { supa } from './supa.js';
 import { listItems, createItem } from './db/items.js';
 import { fetchProfile } from './db/profiles.js';
 import { completeItemAndAwardXP } from './gamification/xp.js';
+import { mountCyrillicGame } from './game/CyrillicGame.js';
 import { toast } from './ui/render.js';
 
 async function renderHeader() {
@@ -126,6 +127,47 @@ document.addEventListener('submit', async (e) => {
   }
 });
 
+// Game mounting
+let gameLoaded = false;
+
+function mountGame() {
+  if (!gameLoaded) {
+    try {
+      mountCyrillicGame();
+      gameLoaded = true;
+    } catch (error) {
+      console.error('Failed to mount game:', error);
+      toast('Failed to load game');
+    }
+  }
+}
+
+// Game/Todo view management
+export function setupViewToggle() {
+  const toggleBtn = document.getElementById('toggle-view');
+  if (!toggleBtn) return;
+
+  toggleBtn.addEventListener('click', () => {
+    const todos = document.getElementById('todos');
+    const game = document.getElementById('game-container');
+
+    if (todos && game) {
+      if (todos.style.display === 'none') {
+        // Switch to Todos
+        todos.style.display = 'block';
+        game.style.display = 'none';
+        toggleBtn.textContent = 'Switch to Game';
+      } else {
+        // Switch to Game
+        todos.style.display = 'none';
+        game.style.display = 'block';
+        toggleBtn.textContent = 'Switch to Todos';
+        mountGame(); // Mount game when switching to it
+      }
+    }
+  });
+}
+
 // Auth UI show/hide
 function updateAuthUI(session) {
   const authPanel = document.getElementById('supabase-test');
@@ -138,6 +180,9 @@ function updateAuthUI(session) {
 export async function boot() {
   const session = await ensureAuthed();
   updateAuthUI(session);
+
+  // Setup view toggle functionality
+  setupViewToggle();
 
   onAuth((s) => {
     updateAuthUI(s);
