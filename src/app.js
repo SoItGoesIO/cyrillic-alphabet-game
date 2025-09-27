@@ -57,7 +57,7 @@ async function renderTodos() {
           ${i.status === 'completed' ? 'Done' : `Complete (+${i.xp_reward ?? 10} XP)`}
         </button>
       </li>
-    `,
+    `
       )
       .join('');
   } catch (error) {

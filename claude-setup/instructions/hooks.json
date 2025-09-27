@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "preToolUse": ["git status --porcelain"],
+    "postToolUse": ["git add -A"]
+  }
+}

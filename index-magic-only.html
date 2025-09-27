@@ -1,63 +1,69 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cyrillic Alphabet Learning Game - Supabase Test</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-                sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+      body {
+        margin: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+          'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Supabase Test Panel -->
-    <div id="supabase-test" class="max-w-md mx-auto mb-8 p-6 bg-white/90 backdrop-blur rounded-xl shadow-lg">
-        <h2 class="text-xl font-bold mb-4 text-gray-800">🧪 Supabase Connection Test</h2>
-        
-        <div class="space-y-3 mb-4">
-            <input 
-                id="email-input" 
-                type="email" 
-                placeholder="your@email.com"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            <div class="flex gap-2">
-                <button 
-                    id="login-btn"
-                    class="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                >
-                    🔐 Sign in (magic link)
-                </button>
-                <button 
-                    id="logout-btn"
-                    class="py-2 px-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors"
-                >
-                    🚪 Sign out
-                </button>
-            </div>
-            <button 
-                id="items-btn"
-                class="w-full py-2 px-4 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
-            >
-                ➕ Add test item & list
-            </button>
+    <div
+      id="supabase-test"
+      class="max-w-md mx-auto mb-8 p-6 bg-white/90 backdrop-blur rounded-xl shadow-lg"
+    >
+      <h2 class="text-xl font-bold mb-4 text-gray-800">🧪 Supabase Connection Test</h2>
+
+      <div class="space-y-3 mb-4">
+        <input
+          id="email-input"
+          type="email"
+          placeholder="your@email.com"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+        <div class="flex gap-2">
+          <button
+            id="login-btn"
+            class="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            🔐 Sign in (magic link)
+          </button>
+          <button
+            id="logout-btn"
+            class="py-2 px-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors"
+          >
+            🚪 Sign out
+          </button>
         </div>
-        
-        <pre id="output" class="bg-gray-100 p-3 rounded-lg text-sm overflow-auto max-h-32 whitespace-pre-wrap"></pre>
-        <div id="auth-status" class="mt-2 text-sm text-gray-600"></div>
+        <button
+          id="items-btn"
+          class="w-full py-2 px-4 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
+        >
+          ➕ Add test item & list
+        </button>
+      </div>
+
+      <pre
+        id="output"
+        class="bg-gray-100 p-3 rounded-lg text-sm overflow-auto max-h-32 whitespace-pre-wrap"
+      ></pre>
+      <div id="auth-status" class="mt-2 text-sm text-gray-600"></div>
     </div>
 
     <!-- Your original game -->
@@ -65,101 +71,100 @@
 
     <!-- 1) Supabase client -->
     <script type="module">
-        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+      import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-        // PUBLIC credentials
-        const SUPABASE_URL = 'https://ohhgmkiwkyntanzgetxv.supabase.co'
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oaGdta2l3a3ludGFuemdldHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg3MjQyMDIsImV4cCI6MjA3NDMwMDIwMn0.DcfhXBWwz788rEoiD2-350NrcmWcBcpzqJqmhFwf95Q'
+      // PUBLIC credentials
+      const SUPABASE_URL = 'https://ohhgmkiwkyntanzgetxv.supabase.co';
+      const SUPABASE_ANON_KEY =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oaGdta2l3a3ludGFuemdldHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg3MjQyMDIsImV4cCI6MjA3NDMwMDIwMn0.DcfhXBWwz788rEoiD2-350NrcmWcBcpzqJqmhFwf95Q';
 
-        // Create global client
-        window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      // Create global client
+      window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Smoke test setup
-        const loginBtn = document.getElementById('login-btn')
-        const logoutBtn = document.getElementById('logout-btn')
-        const itemsBtn = document.getElementById('items-btn')
-        const emailInput = document.getElementById('email-input')
-        const output = document.getElementById('output')
-        const authStatus = document.getElementById('auth-status')
+      // Smoke test setup
+      const loginBtn = document.getElementById('login-btn');
+      const logoutBtn = document.getElementById('logout-btn');
+      const itemsBtn = document.getElementById('items-btn');
+      const emailInput = document.getElementById('email-input');
+      const output = document.getElementById('output');
+      const authStatus = document.getElementById('auth-status');
 
-        loginBtn.onclick = async () => {
-            const email = emailInput.value.trim()
-            if (!email) return alert('Fill email first')
-            
-            output.textContent = 'Sending magic link...'
-            const { error } = await window.supabase.auth.signInWithOtp({ email })
-            
-            if (error) {
-                output.textContent = 'Login error: ' + error.message
-            } else {
-                output.textContent = '✅ Magic link sent! Check your email and click the link.'
-            }
+      loginBtn.onclick = async () => {
+        const email = emailInput.value.trim();
+        if (!email) return alert('Fill email first');
+
+        output.textContent = 'Sending magic link...';
+        const { error } = await window.supabase.auth.signInWithOtp({ email });
+
+        if (error) {
+          output.textContent = 'Login error: ' + error.message;
+        } else {
+          output.textContent = '✅ Magic link sent! Check your email and click the link.';
+        }
+      };
+
+      logoutBtn.onclick = async () => {
+        await window.supabase.auth.signOut();
+        output.textContent = '👋 Signed out.';
+        authStatus.textContent = 'Not authenticated';
+      };
+
+      itemsBtn.onclick = async () => {
+        const { data: userData } = await window.supabase.auth.getUser();
+        if (!userData.user) {
+          return (output.textContent = '❌ Please sign in first.');
         }
 
-        logoutBtn.onclick = async () => {
-            await window.supabase.auth.signOut()
-            output.textContent = '👋 Signed out.'
-            authStatus.textContent = 'Not authenticated'
+        output.textContent = 'Adding test item...';
+
+        // Insert test item
+        const { error: insErr } = await window.supabase.from('items').insert({
+          user_id: userData.user.id,
+          title: 'Test item ' + new Date().toLocaleTimeString(),
+          description: 'Hello from Supabase! 🎉',
+        });
+
+        if (insErr) {
+          return (output.textContent = 'Insert error: ' + insErr.message);
         }
 
-        itemsBtn.onclick = async () => {
-            const { data: userData } = await window.supabase.auth.getUser()
-            if (!userData.user) {
-                return (output.textContent = '❌ Please sign in first.')
-            }
+        // List items
+        const { data, error } = await window.supabase
+          .from('items')
+          .select('id,title,status,created_at')
+          .order('created_at', { ascending: false })
+          .limit(5);
 
-            output.textContent = 'Adding test item...'
-            
-            // Insert test item
-            const { error: insErr } = await window.supabase
-                .from('items')
-                .insert({
-                    user_id: userData.user.id,
-                    title: 'Test item ' + new Date().toLocaleTimeString(),
-                    description: 'Hello from Supabase! 🎉',
-                })
-
-            if (insErr) {
-                return (output.textContent = 'Insert error: ' + insErr.message)
-            }
-
-            // List items
-            const { data, error } = await window.supabase
-                .from('items')
-                .select('id,title,status,created_at')
-                .order('created_at', { ascending: false })
-                .limit(5)
-
-            if (error) {
-                output.textContent = 'List error: ' + error.message
-            } else {
-                output.textContent = '✅ Items in database:\\n\\n' + JSON.stringify(data, null, 2)
-            }
+        if (error) {
+          output.textContent = 'List error: ' + error.message;
+        } else {
+          output.textContent = '✅ Items in database:\\n\\n' + JSON.stringify(data, null, 2);
         }
+      };
 
-        // Auth state monitoring
-        window.supabase.auth.onAuthStateChange((event, session) => {
-            console.log('Auth change:', event, session?.user?.email)
-            
-            if (session?.user) {
-                authStatus.textContent = '✅ Logged in as: ' + session.user.email
-                authStatus.className = 'mt-2 text-sm text-green-600 font-medium'
-            } else {
-                authStatus.textContent = '❌ Not authenticated'
-                authStatus.className = 'mt-2 text-sm text-red-600'
-            }
-        })
+      // Auth state monitoring
+      window.supabase.auth.onAuthStateChange((event, session) => {
+        console.log('Auth change:', event, session?.user?.email);
 
-        // Initial auth check
-        window.supabase.auth.getSession().then(({ data: { session } }) => {
-            if (session?.user) {
-                authStatus.textContent = '✅ Already logged in as: ' + session.user.email
-                authStatus.className = 'mt-2 text-sm text-green-600 font-medium'
-            }
-        })
+        if (session?.user) {
+          authStatus.textContent = '✅ Logged in as: ' + session.user.email;
+          authStatus.className = 'mt-2 text-sm text-green-600 font-medium';
+        } else {
+          authStatus.textContent = '❌ Not authenticated';
+          authStatus.className = 'mt-2 text-sm text-red-600';
+        }
+      });
+
+      // Initial auth check
+      window.supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session?.user) {
+          authStatus.textContent = '✅ Already logged in as: ' + session.user.email;
+          authStatus.className = 'mt-2 text-sm text-green-600 font-medium';
+        }
+      });
     </script>
 
     <!-- 2) Your original game script -->
     <script src="script-original.js"></script>
-</body>
+  </body>
 </html>

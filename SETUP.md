@@ -62,11 +62,13 @@ This guide will walk you through setting up your gamified Cyrillic learning app 
 ### Step 6: Deploy to Netlify
 
 #### Option A: Drag & Drop (Easiest)
+
 1. Go to [netlify.com](https://netlify.com) and sign up/sign in
 2. Drag your entire project folder to the Netlify dashboard
 3. Your site will be deployed automatically!
 
 #### Option B: Git Integration (Recommended)
+
 1. Push your code to GitHub/GitLab
 2. In Netlify, click "New site from Git"
 3. Connect your repository
@@ -76,6 +78,7 @@ This guide will walk you through setting up your gamified Cyrillic learning app 
 5. Click "Deploy site"
 
 #### Option C: Netlify CLI (Advanced)
+
 ```bash
 # If you have netlify CLI installed
 netlify deploy --prod --dir="."
@@ -104,21 +107,25 @@ After setup, verify everything works:
 ## 🔍 Troubleshooting
 
 ### "Setup Required" Screen Still Showing
+
 - Check that you replaced both `SUPABASE_URL` and `SUPABASE_ANON_KEY`
 - Make sure there are no extra spaces or quotes
 - Redeploy your site after making changes
 
 ### User Can't Sign Up
+
 - Check Supabase **Authentication** → **Settings**
 - Ensure **Email** provider is enabled
 - Verify **Site URL** matches your deployed domain
 
 ### Database Errors
+
 - Make sure you ran the complete `schema.sql` file
 - Check **Supabase** → **Database** → **Tables** to see if tables were created
 - Look for errors in **Logs** section of Supabase
 
 ### XP Not Updating
+
 - Check **Row Level Security** is properly set up (included in schema.sql)
 - Verify user is properly authenticated
 - Look at **Supabase** → **Database** → **xp_ledger** table for XP transactions
@@ -126,16 +133,19 @@ After setup, verify everything works:
 ## 🔄 Updates and Maintenance
 
 ### Adding New Features
+
 1. Update your local files
 2. Test locally
 3. Deploy to Netlify (automatic if using Git integration)
 
 ### Database Updates
+
 1. Create new SQL migration file
 2. Run in Supabase SQL Editor
 3. Update application code as needed
 
 ### Monitoring Usage
+
 - **Supabase Dashboard**: Check user count, database usage
 - **Netlify Analytics**: See page views and traffic
 - **Supabase Logs**: Debug any issues
@@ -143,6 +153,7 @@ After setup, verify everything works:
 ## 📊 Understanding Your Data
 
 ### Key Tables to Monitor
+
 - `profiles`: User stats (XP, levels, streaks)
 - `items`: Tasks created by users
 - `quiz_sessions`: Learning activity
@@ -150,23 +161,24 @@ After setup, verify everything works:
 - `events`: Complete activity log
 
 ### Useful Queries
+
 ```sql
 -- Top users by XP
-SELECT display_name, total_xp, level 
-FROM profiles 
-ORDER BY total_xp DESC 
+SELECT display_name, total_xp, level
+FROM profiles
+ORDER BY total_xp DESC
 LIMIT 10;
 
 -- Daily activity
 SELECT date, COUNT(*) as active_users
-FROM events 
+FROM events
 WHERE occurred_at >= NOW() - INTERVAL '7 days'
 GROUP BY date
 ORDER BY date;
 
 -- Most popular features
 SELECT domain, COUNT(*) as usage_count
-FROM events 
+FROM events
 GROUP BY domain
 ORDER BY usage_count DESC;
 ```
@@ -176,7 +188,7 @@ ORDER BY usage_count DESC;
 Once your app is live:
 
 1. **Share with friends** to get initial users
-2. **Monitor usage** through Supabase dashboard  
+2. **Monitor usage** through Supabase dashboard
 3. **Gather feedback** on features and UX
 4. **Add new features** from the roadmap
 5. **Consider custom domain** (Netlify Pro feature)

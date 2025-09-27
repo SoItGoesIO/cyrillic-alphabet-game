@@ -1,292 +1,318 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cyrillic Learning & Todo System</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-                sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        #toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #10b981;
-            color: white;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            transform: translateY(-100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-        
-        #toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        
-        .needs-auth #app-content {
-            display: none;
-        }
-        
-        .needs-auth #supabase-test {
-            display: block;
-        }
-          /* Auth UI defaults for predictable first paint */
-      .is-authed #supabase-test { display: none; }
-      .is-authed #app-content { display: block; }
-      #supabase-test { display: block; }
-      #app-content { display: none; }
+      body {
+        margin: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+          'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      #toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #10b981;
+        color: white;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        transform: translateY(-100px);
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+
+      #toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .needs-auth #app-content {
+        display: none;
+      }
+
+      .needs-auth #supabase-test {
+        display: block;
+      }
+      /* Auth UI defaults for predictable first paint */
+      .is-authed #supabase-test {
+        display: none;
+      }
+      .is-authed #app-content {
+        display: block;
+      }
+      #supabase-test {
+        display: block;
+      }
+      #app-content {
+        display: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Environment config -->
     <script id="env" type="application/json">
-    {
+      {
         "SUPABASE_URL": "https://ohhgmkiwkyntanzgetxv.supabase.co",
         "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oaGdta2l3a3ludGFuemdldHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg3MjQyMDIsImV4cCI6MjA3NDMwMDIwMn0.DcfhXBWwz788rEoiD2-350NrcmWcBcpzqJqmhFwf95Q"
-    }
+      }
     </script>
 
     <!-- Toast notification -->
     <div id="toast"></div>
 
     <!-- Auth Panel (shown when not authenticated) -->
-    <div id="supabase-test" class="max-w-md mx-auto mb-8 p-6 bg-white/90 backdrop-blur rounded-xl shadow-lg">
-        <h2 class="text-xl font-bold mb-4 text-gray-800">ðŸ§ª Authentication</h2>
-        
-        <div class="space-y-3 mb-4">
-            <input 
-                id="email-input" 
-                type="email" 
-                placeholder="your@email.com"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            <input 
-                id="password-input" 
-                type="password" 
-                placeholder="password (6+ chars)"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            <div class="flex gap-2">
-                <button 
-                    id="signup-btn"
-                    class="flex-1 py-2 px-4 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
-                >
-                    ðŸ“ Sign Up
-                </button>
-                <button 
-                    id="login-btn"
-                    class="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                >
-                    ðŸ” Sign In
-                </button>
-            </div>
-            <div class="flex gap-2">
-                <button 
-                    id="magic-btn"
-                    class="flex-1 py-2 px-4 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
-                >
-                    âœ¨ Magic Link
-                </button>
-                <button 
-                    id="logout-btn"
-                    class="flex-1 py-2 px-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors"
-                >
-                    ðŸšª Sign Out
-                </button>
-            </div>
+    <div
+      id="supabase-test"
+      class="max-w-md mx-auto mb-8 p-6 bg-white/90 backdrop-blur rounded-xl shadow-lg"
+    >
+      <h2 class="text-xl font-bold mb-4 text-gray-800">ðŸ§ª Authentication</h2>
+
+      <div class="space-y-3 mb-4">
+        <input
+          id="email-input"
+          type="email"
+          placeholder="your@email.com"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+        <input
+          id="password-input"
+          type="password"
+          placeholder="password (6+ chars)"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+        <div class="flex gap-2">
+          <button
+            id="signup-btn"
+            class="flex-1 py-2 px-4 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
+          >
+            ðŸ“ Sign Up
+          </button>
+          <button
+            id="login-btn"
+            class="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            ðŸ” Sign In
+          </button>
         </div>
-        
-        <pre id="output" class="bg-gray-100 p-3 rounded-lg text-sm overflow-auto max-h-32 whitespace-pre-wrap"></pre>
-        <div id="auth-status" class="mt-2 text-sm text-gray-600"></div>
+        <div class="flex gap-2">
+          <button
+            id="magic-btn"
+            class="flex-1 py-2 px-4 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+          >
+            âœ¨ Magic Link
+          </button>
+          <button
+            id="logout-btn"
+            class="flex-1 py-2 px-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors"
+          >
+            ðŸšª Sign Out
+          </button>
+        </div>
+      </div>
+
+      <pre
+        id="output"
+        class="bg-gray-100 p-3 rounded-lg text-sm overflow-auto max-h-32 whitespace-pre-wrap"
+      ></pre>
+      <div id="auth-status" class="mt-2 text-sm text-gray-600"></div>
     </div>
 
     <!-- Main App Content (shown when authenticated) -->
     <div id="app-content" class="max-w-6xl mx-auto space-y-8">
-        <!-- Header with XP Badge -->
-        <header class="text-center">
-            <h1 class="text-4xl font-bold text-white mb-4">ðŸŽ“ Cyrillic Learning & Todo System</h1>
-            <div class="flex justify-center items-center gap-4">
-                <span id="xp-badge" class="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-lg font-semibold">
-                    Level 1 â€¢ 0 XP
-                </span>
-                <button id="toggle-view" class="px-4 py-2 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-colors">
-                    Switch to Game
-                </button>
-            </div>
-        </header>
+      <!-- Header with XP Badge -->
+      <header class="text-center">
+        <h1 class="text-4xl font-bold text-white mb-4">ðŸŽ“ Cyrillic Learning & Todo System</h1>
+        <div class="flex justify-center items-center gap-4">
+          <span
+            id="xp-badge"
+            class="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-lg font-semibold"
+          >
+            Level 1 â€¢ 0 XP
+          </span>
+          <button
+            id="toggle-view"
+            class="px-4 py-2 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-colors"
+          >
+            Switch to Game
+          </button>
+        </div>
+      </header>
 
-        <!-- Todo System -->
-        <section id="todos" class="bg-white/90 backdrop-blur rounded-xl p-6 shadow-lg">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">ðŸ“‹ Your Tasks</h2>
-            
-            <!-- Add Task Form -->
-            <form id="new-task-form" class="mb-6 space-y-4">
-                <div class="flex gap-4">
-                    <input 
-                        name="title" 
-                        placeholder="New task title..." 
-                        required
-                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                    <button 
-                        type="submit"
-                        class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                    >
-                        Add Task
-                    </button>
-                </div>
-                <input 
-                    name="description" 
-                    placeholder="Optional description..." 
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-            </form>
-            
-            <!-- Task List -->
-            <ul id="todo-list" class="space-y-3">
-                <li class="text-gray-500 italic">Loading tasks...</li>
-            </ul>
-        </section>
+      <!-- Todo System -->
+      <section id="todos" class="bg-white/90 backdrop-blur rounded-xl p-6 shadow-lg">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">ðŸ“‹ Your Tasks</h2>
 
-        <!-- Cyrillic Game Container -->
-        <section id="game-container" class="bg-white/90 backdrop-blur rounded-xl p-6 shadow-lg" style="display: none;">
-            <div id="root"></div>
-        </section>
+        <!-- Add Task Form -->
+        <form id="new-task-form" class="mb-6 space-y-4">
+          <div class="flex gap-4">
+            <input
+              name="title"
+              placeholder="New task title..."
+              required
+              class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+            <button
+              type="submit"
+              class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Add Task
+            </button>
+          </div>
+          <input
+            name="description"
+            placeholder="Optional description..."
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </form>
+
+        <!-- Task List -->
+        <ul id="todo-list" class="space-y-3">
+          <li class="text-gray-500 italic">Loading tasks...</li>
+        </ul>
+      </section>
+
+      <!-- Cyrillic Game Container -->
+      <section
+        id="game-container"
+        class="bg-white/90 backdrop-blur rounded-xl p-6 shadow-lg"
+        style="display: none"
+      >
+        <div id="root"></div>
+      </section>
     </div>
 
     <!-- Legacy auth handlers (keeping for compatibility) -->
     <script type="module">
-        // Make credentials available globally for backward compatibility
-        window.SUPABASE_URL = 'https://ohhgmkiwkyntanzgetxv.supabase.co';
-        window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oaGdta2l3a3ludGFuemdldHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg3MjQyMDIsImV4cCI6MjA3NDMwMDIwMn0.DcfhXBWwz788rEoiD2-350NrcmWcBcpzqJqmhFwf95Q';
+      // Make credentials available globally for backward compatibility
+      window.SUPABASE_URL = 'https://ohhgmkiwkyntanzgetxv.supabase.co';
+      window.SUPABASE_ANON_KEY =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oaGdta2l3a3ludGFuemdldHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg3MjQyMDIsImV4cCI6MjA3NDMwMDIwMn0.DcfhXBWwz788rEoiD2-350NrcmWcBcpzqJqmhFwf95Q';
 
-        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-        
-        // Create global client for legacy compatibility
-        window.supabase = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+      import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-        // Legacy auth handlers
-        const signupBtn = document.getElementById('signup-btn');
-        const loginBtn = document.getElementById('login-btn');
-        const magicBtn = document.getElementById('magic-btn');
-        const logoutBtn = document.getElementById('logout-btn');
-        const emailInput = document.getElementById('email-input');
-        const passwordInput = document.getElementById('password-input');
-        const output = document.getElementById('output');
-        const authStatus = document.getElementById('auth-status');
+      // Create global client for legacy compatibility
+      window.supabase = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
-        signupBtn.onclick = async () => {
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
-            
-            if (!email || !password) return alert('Fill email and password');
-            if (password.length < 6) return alert('Password must be 6+ characters');
-            
-            output.textContent = 'Creating account...';
-            const { data, error } = await window.supabase.auth.signUp({ email, password });
-            
-            if (error) {
-                output.textContent = 'Signup error: ' + error.message;
-            } else {
-                output.textContent = 'âœ… Account created! You might need to check email for confirmation.';
-            }
-        };
+      // Legacy auth handlers
+      const signupBtn = document.getElementById('signup-btn');
+      const loginBtn = document.getElementById('login-btn');
+      const magicBtn = document.getElementById('magic-btn');
+      const logoutBtn = document.getElementById('logout-btn');
+      const emailInput = document.getElementById('email-input');
+      const passwordInput = document.getElementById('password-input');
+      const output = document.getElementById('output');
+      const authStatus = document.getElementById('auth-status');
 
-        loginBtn.onclick = async () => {
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
-            
-            if (!email || !password) return alert('Fill email and password');
-            
-            output.textContent = 'Signing in...';
-            const { data, error } = await window.supabase.auth.signInWithPassword({ email, password });
-            
-            if (error) {
-                output.textContent = 'Login error: ' + error.message;
-            } else {
-                output.textContent = 'âœ… Signed in successfully!';
-            }
-        };
+      signupBtn.onclick = async () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
 
-        magicBtn.onclick = async () => {
-            const email = emailInput.value.trim();
-            if (!email) return alert('Fill email first');
-            
-            output.textContent = 'Sending magic link...';
-            const { error } = await window.supabase.auth.signInWithOtp({ email });
-            
-            if (error) {
-                output.textContent = 'Magic link error: ' + error.message;
-            } else {
-                output.textContent = 'âœ… Magic link sent! Check your email and click the link.';
-            }
-        };
+        if (!email || !password) return alert('Fill email and password');
+        if (password.length < 6) return alert('Password must be 6+ characters');
 
-        logoutBtn.onclick = async () => {
-            await window.supabase.auth.signOut();
-            output.textContent = 'ðŸ‘‹ Signed out.';
-            authStatus.textContent = 'Not authenticated';
-        };
+        output.textContent = 'Creating account...';
+        const { data, error } = await window.supabase.auth.signUp({ email, password });
 
-        // View toggle
-        document.getElementById('toggle-view').onclick = () => {
-            const todos = document.getElementById('todos');
-            const game = document.getElementById('game-container');
-            const btn = document.getElementById('toggle-view');
-            
-            if (todos.style.display === 'none') {
-                todos.style.display = 'block';
-                game.style.display = 'none';
-                btn.textContent = 'Switch to Game';
-            } else {
-                todos.style.display = 'none';
-                game.style.display = 'block';
-                btn.textContent = 'Switch to Todos';
-            }
-        };
+        if (error) {
+          output.textContent = 'Signup error: ' + error.message;
+        } else {
+          output.textContent =
+            'âœ… Account created! You might need to check email for confirmation.';
+        }
+      };
 
-        // Auth state monitoring
-        window.supabase.auth.onAuthStateChange((event, session) => {
-            if (session?.user) {
-                authStatus.textContent = 'âœ… Logged in as: ' + session.user.email;
-                authStatus.className = 'mt-2 text-sm text-green-600 font-medium';
-            } else {
-                authStatus.textContent = 'âŒ Not authenticated';
-                authStatus.className = 'mt-2 text-sm text-red-600';
-            }
-        });
+      loginBtn.onclick = async () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
 
-        // Initial auth check
-        window.supabase.auth.getSession().then(({ data: { session } }) => {
-            if (session?.user) {
-                authStatus.textContent = 'âœ… Already logged in as: ' + session.user.email;
-                authStatus.className = 'mt-2 text-sm text-green-600 font-medium';
-            }
-        });
+        if (!email || !password) return alert('Fill email and password');
+
+        output.textContent = 'Signing in...';
+        const { data, error } = await window.supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+          output.textContent = 'Login error: ' + error.message;
+        } else {
+          output.textContent = 'âœ… Signed in successfully!';
+        }
+      };
+
+      magicBtn.onclick = async () => {
+        const email = emailInput.value.trim();
+        if (!email) return alert('Fill email first');
+
+        output.textContent = 'Sending magic link...';
+        const { error } = await window.supabase.auth.signInWithOtp({ email });
+
+        if (error) {
+          output.textContent = 'Magic link error: ' + error.message;
+        } else {
+          output.textContent = 'âœ… Magic link sent! Check your email and click the link.';
+        }
+      };
+
+      logoutBtn.onclick = async () => {
+        await window.supabase.auth.signOut();
+        output.textContent = 'ðŸ‘‹ Signed out.';
+        authStatus.textContent = 'Not authenticated';
+      };
+
+      // View toggle
+      document.getElementById('toggle-view').onclick = () => {
+        const todos = document.getElementById('todos');
+        const game = document.getElementById('game-container');
+        const btn = document.getElementById('toggle-view');
+
+        if (todos.style.display === 'none') {
+          todos.style.display = 'block';
+          game.style.display = 'none';
+          btn.textContent = 'Switch to Game';
+        } else {
+          todos.style.display = 'none';
+          game.style.display = 'block';
+          btn.textContent = 'Switch to Todos';
+        }
+      };
+
+      // Auth state monitoring
+      window.supabase.auth.onAuthStateChange((event, session) => {
+        if (session?.user) {
+          authStatus.textContent = 'âœ… Logged in as: ' + session.user.email;
+          authStatus.className = 'mt-2 text-sm text-green-600 font-medium';
+        } else {
+          authStatus.textContent = 'âŒ Not authenticated';
+          authStatus.className = 'mt-2 text-sm text-red-600';
+        }
+      });
+
+      // Initial auth check
+      window.supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session?.user) {
+          authStatus.textContent = 'âœ… Already logged in as: ' + session.user.email;
+          authStatus.className = 'mt-2 text-sm text-green-600 font-medium';
+        }
+      });
     </script>
 
     <!-- Load the original Cyrillic game -->
     <script src="script-original.js"></script>
-    
+
     <!-- Load the new modular app -->
     <script type="module" src="/src/app.js"></script>
-</body>
+  </body>
 </html>

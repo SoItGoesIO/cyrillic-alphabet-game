@@ -4,6 +4,21 @@ build/
 *.log
 .env
 .env.local
+.env.private
+.env.production
+supabase/.temp
+
+# Claude Code
+.claude/memory/
+CLAUDE.local.md
+
+# Archives
+claude-*.tar.gz
 
 # Local Netlify folder
 .netlify
+
+# Additional entries
+.husky/_
+.DS_Store
+Thumbs.db

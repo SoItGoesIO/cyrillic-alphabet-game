@@ -1,307 +1,305 @@
 ﻿{
-    "totalLetters":  33,
-    "description":  "Russian Alphabet Audio Files Mapping",
-    "errors":  [
-
-               ],
-    "generatedDate":  "2025-09-24 13:08:53",
-    "files":  [
-                  {
-                      "position":  23,
-                      "latin":  "kh",
-                      "cyrillic":  "х",
-                      "unicodeHex":  "U+0445",
-                      "originalFile":  "22h.mp3",
-                      "filename":  "23.mp3",
-                      "english":  "khah"
-                  },
-                  {
-                      "position":  22,
-                      "latin":  "f",
-                      "cyrillic":  "ф",
-                      "unicodeHex":  "U+0444",
-                      "originalFile":  "21f.mp3",
-                      "filename":  "22.mp3",
-                      "english":  "ef"
-                  },
-                  {
-                      "position":  25,
-                      "latin":  "ch",
-                      "cyrillic":  "ч",
-                      "unicodeHex":  "U+0447",
-                      "originalFile":  "24ch.mp3",
-                      "filename":  "25.mp3",
-                      "english":  "cheh"
-                  },
-                  {
-                      "position":  24,
-                      "latin":  "ts",
-                      "cyrillic":  "ц",
-                      "unicodeHex":  "U+0446",
-                      "originalFile":  "23c.mp3",
-                      "filename":  "24.mp3",
-                      "english":  "tseh"
-                  },
-                  {
-                      "position":  19,
-                      "latin":  "s",
-                      "cyrillic":  "с",
-                      "unicodeHex":  "U+0441",
-                      "originalFile":  "18s.mp3",
-                      "filename":  "19.mp3",
-                      "english":  "es"
-                  },
-                  {
-                      "position":  18,
-                      "latin":  "r",
-                      "cyrillic":  "р",
-                      "unicodeHex":  "U+0440",
-                      "originalFile":  "17r.mp3",
-                      "filename":  "18.mp3",
-                      "english":  "er"
-                  },
-                  {
-                      "position":  21,
-                      "latin":  "u",
-                      "cyrillic":  "у",
-                      "unicodeHex":  "U+0443",
-                      "originalFile":  "20u.mp3",
-                      "filename":  "21.mp3",
-                      "english":  "oo"
-                  },
-                  {
-                      "position":  20,
-                      "latin":  "t",
-                      "cyrillic":  "т",
-                      "unicodeHex":  "U+0442",
-                      "originalFile":  "19t.mp3",
-                      "filename":  "20.mp3",
-                      "english":  "teh"
-                  },
-                  {
-                      "position":  31,
-                      "latin":  "e",
-                      "cyrillic":  "э",
-                      "unicodeHex":  "U+044D",
-                      "originalFile":  "28e.mp3",
-                      "filename":  "31.mp3",
-                      "english":  "eh"
-                  },
-                  {
-                      "position":  30,
-                      "latin":  "",
-                      "cyrillic":  "ь",
-                      "unicodeHex":  "U+044C",
-                      "originalFile":  "softsign.mp3",
-                      "filename":  "30.mp3",
-                      "english":  "soft sign"
-                  },
-                  {
-                      "position":  33,
-                      "latin":  "ya",
-                      "cyrillic":  "я",
-                      "unicodeHex":  "U+044F",
-                      "originalFile":  "30ya.mp3",
-                      "filename":  "33.mp3",
-                      "english":  "ya"
-                  },
-                  {
-                      "position":  32,
-                      "latin":  "yu",
-                      "cyrillic":  "ю",
-                      "unicodeHex":  "U+044E",
-                      "originalFile":  "29Y.mp3",
-                      "filename":  "32.mp3",
-                      "english":  "yu"
-                  },
-                  {
-                      "position":  27,
-                      "latin":  "shch",
-                      "cyrillic":  "щ",
-                      "unicodeHex":  "U+0449",
-                      "originalFile":  "26sha.mp3",
-                      "filename":  "27.mp3",
-                      "english":  "shchah"
-                  },
-                  {
-                      "position":  26,
-                      "latin":  "sh",
-                      "cyrillic":  "ш",
-                      "unicodeHex":  "U+0448",
-                      "originalFile":  "25sh.mp3",
-                      "filename":  "26.mp3",
-                      "english":  "shah"
-                  },
-                  {
-                      "position":  29,
-                      "latin":  "y",
-                      "cyrillic":  "ы",
-                      "unicodeHex":  "U+044B",
-                      "originalFile":  "27yy.mp3",
-                      "filename":  "29.mp3",
-                      "english":  "ih"
-                  },
-                  {
-                      "position":  28,
-                      "latin":  "",
-                      "cyrillic":  "ъ",
-                      "unicodeHex":  "U+044A",
-                      "originalFile":  "hardsign.mp3",
-                      "filename":  "28.mp3",
-                      "english":  "hard sign"
-                  },
-                  {
-                      "position":  17,
-                      "latin":  "p",
-                      "cyrillic":  "п",
-                      "unicodeHex":  "U+043F",
-                      "originalFile":  "16p.mp3",
-                      "filename":  "17.mp3",
-                      "english":  "peh"
-                  },
-                  {
-                      "position":  6,
-                      "latin":  "ye",
-                      "cyrillic":  "е",
-                      "unicodeHex":  "U+0435",
-                      "originalFile":  "5e.mp3",
-                      "filename":  "06.mp3",
-                      "english":  "yeh"
-                  },
-                  {
-                      "position":  5,
-                      "latin":  "d",
-                      "cyrillic":  "д",
-                      "unicodeHex":  "U+0434",
-                      "originalFile":  "4d.mp3",
-                      "filename":  "05.mp3",
-                      "english":  "deh"
-                  },
-                  {
-                      "position":  8,
-                      "latin":  "zh",
-                      "cyrillic":  "ж",
-                      "unicodeHex":  "U+0436",
-                      "originalFile":  "6g.mp3",
-                      "filename":  "08.mp3",
-                      "english":  "zheh"
-                  },
-                  {
-                      "position":  7,
-                      "latin":  "yo",
-                      "cyrillic":  "ё",
-                      "unicodeHex":  "U+0451",
-                      "originalFile":  "6_1yo.mp3",
-                      "filename":  "07.mp3",
-                      "english":  "yo"
-                  },
-                  {
-                      "position":  2,
-                      "latin":  "b",
-                      "cyrillic":  "б",
-                      "unicodeHex":  "U+0431",
-                      "originalFile":  "2b.mp3",
-                      "filename":  "02.mp3",
-                      "english":  "beh"
-                  },
-                  {
-                      "position":  1,
-                      "latin":  "a",
-                      "cyrillic":  "а",
-                      "unicodeHex":  "U+0430",
-                      "originalFile":  "1a.mp3",
-                      "filename":  "01.mp3",
-                      "english":  "ah"
-                  },
-                  {
-                      "position":  4,
-                      "latin":  "g",
-                      "cyrillic":  "г",
-                      "unicodeHex":  "U+0433",
-                      "originalFile":  "4g.mp3",
-                      "filename":  "04.mp3",
-                      "english":  "geh"
-                  },
-                  {
-                      "position":  3,
-                      "latin":  "v",
-                      "cyrillic":  "в",
-                      "unicodeHex":  "U+0432",
-                      "originalFile":  "3v.mp3",
-                      "filename":  "03.mp3",
-                      "english":  "veh"
-                  },
-                  {
-                      "position":  14,
-                      "latin":  "m",
-                      "cyrillic":  "м",
-                      "unicodeHex":  "U+043C",
-                      "originalFile":  "13m.mp3",
-                      "filename":  "14.mp3",
-                      "english":  "em"
-                  },
-                  {
-                      "position":  13,
-                      "latin":  "l",
-                      "cyrillic":  "л",
-                      "unicodeHex":  "U+043B",
-                      "originalFile":  "12l.mp3",
-                      "filename":  "13.mp3",
-                      "english":  "el"
-                  },
-                  {
-                      "position":  16,
-                      "latin":  "o",
-                      "cyrillic":  "о",
-                      "unicodeHex":  "U+043E",
-                      "originalFile":  "15p.mp3",
-                      "filename":  "16.mp3",
-                      "english":  "oh"
-                  },
-                  {
-                      "position":  15,
-                      "latin":  "n",
-                      "cyrillic":  "н",
-                      "unicodeHex":  "U+043D",
-                      "originalFile":  "14n.mp3",
-                      "filename":  "15.mp3",
-                      "english":  "en"
-                  },
-                  {
-                      "position":  10,
-                      "latin":  "i",
-                      "cyrillic":  "и",
-                      "unicodeHex":  "U+0438",
-                      "originalFile":  "8i.mp3",
-                      "filename":  "10.mp3",
-                      "english":  "ee"
-                  },
-                  {
-                      "position":  9,
-                      "latin":  "z",
-                      "cyrillic":  "з",
-                      "unicodeHex":  "U+0437",
-                      "originalFile":  "7z.mp3",
-                      "filename":  "09.mp3",
-                      "english":  "zeh"
-                  },
-                  {
-                      "position":  12,
-                      "latin":  "k",
-                      "cyrillic":  "к",
-                      "unicodeHex":  "U+043A",
-                      "originalFile":  "10k.mp3",
-                      "filename":  "12.mp3",
-                      "english":  "kah"
-                  },
-                  {
-                      "position":  11,
-                      "latin":  "y",
-                      "cyrillic":  "й",
-                      "unicodeHex":  "U+0439",
-                      "originalFile":  "9y.mp3",
-                      "filename":  "11.mp3",
-                      "english":  "y"
-                  }
-              ]
+  "totalLetters": 33,
+  "description": "Russian Alphabet Audio Files Mapping",
+  "errors": [],
+  "generatedDate": "2025-09-24 13:08:53",
+  "files": [
+    {
+      "position": 23,
+      "latin": "kh",
+      "cyrillic": "х",
+      "unicodeHex": "U+0445",
+      "originalFile": "22h.mp3",
+      "filename": "23.mp3",
+      "english": "khah"
+    },
+    {
+      "position": 22,
+      "latin": "f",
+      "cyrillic": "ф",
+      "unicodeHex": "U+0444",
+      "originalFile": "21f.mp3",
+      "filename": "22.mp3",
+      "english": "ef"
+    },
+    {
+      "position": 25,
+      "latin": "ch",
+      "cyrillic": "ч",
+      "unicodeHex": "U+0447",
+      "originalFile": "24ch.mp3",
+      "filename": "25.mp3",
+      "english": "cheh"
+    },
+    {
+      "position": 24,
+      "latin": "ts",
+      "cyrillic": "ц",
+      "unicodeHex": "U+0446",
+      "originalFile": "23c.mp3",
+      "filename": "24.mp3",
+      "english": "tseh"
+    },
+    {
+      "position": 19,
+      "latin": "s",
+      "cyrillic": "с",
+      "unicodeHex": "U+0441",
+      "originalFile": "18s.mp3",
+      "filename": "19.mp3",
+      "english": "es"
+    },
+    {
+      "position": 18,
+      "latin": "r",
+      "cyrillic": "р",
+      "unicodeHex": "U+0440",
+      "originalFile": "17r.mp3",
+      "filename": "18.mp3",
+      "english": "er"
+    },
+    {
+      "position": 21,
+      "latin": "u",
+      "cyrillic": "у",
+      "unicodeHex": "U+0443",
+      "originalFile": "20u.mp3",
+      "filename": "21.mp3",
+      "english": "oo"
+    },
+    {
+      "position": 20,
+      "latin": "t",
+      "cyrillic": "т",
+      "unicodeHex": "U+0442",
+      "originalFile": "19t.mp3",
+      "filename": "20.mp3",
+      "english": "teh"
+    },
+    {
+      "position": 31,
+      "latin": "e",
+      "cyrillic": "э",
+      "unicodeHex": "U+044D",
+      "originalFile": "28e.mp3",
+      "filename": "31.mp3",
+      "english": "eh"
+    },
+    {
+      "position": 30,
+      "latin": "",
+      "cyrillic": "ь",
+      "unicodeHex": "U+044C",
+      "originalFile": "softsign.mp3",
+      "filename": "30.mp3",
+      "english": "soft sign"
+    },
+    {
+      "position": 33,
+      "latin": "ya",
+      "cyrillic": "я",
+      "unicodeHex": "U+044F",
+      "originalFile": "30ya.mp3",
+      "filename": "33.mp3",
+      "english": "ya"
+    },
+    {
+      "position": 32,
+      "latin": "yu",
+      "cyrillic": "ю",
+      "unicodeHex": "U+044E",
+      "originalFile": "29Y.mp3",
+      "filename": "32.mp3",
+      "english": "yu"
+    },
+    {
+      "position": 27,
+      "latin": "shch",
+      "cyrillic": "щ",
+      "unicodeHex": "U+0449",
+      "originalFile": "26sha.mp3",
+      "filename": "27.mp3",
+      "english": "shchah"
+    },
+    {
+      "position": 26,
+      "latin": "sh",
+      "cyrillic": "ш",
+      "unicodeHex": "U+0448",
+      "originalFile": "25sh.mp3",
+      "filename": "26.mp3",
+      "english": "shah"
+    },
+    {
+      "position": 29,
+      "latin": "y",
+      "cyrillic": "ы",
+      "unicodeHex": "U+044B",
+      "originalFile": "27yy.mp3",
+      "filename": "29.mp3",
+      "english": "ih"
+    },
+    {
+      "position": 28,
+      "latin": "",
+      "cyrillic": "ъ",
+      "unicodeHex": "U+044A",
+      "originalFile": "hardsign.mp3",
+      "filename": "28.mp3",
+      "english": "hard sign"
+    },
+    {
+      "position": 17,
+      "latin": "p",
+      "cyrillic": "п",
+      "unicodeHex": "U+043F",
+      "originalFile": "16p.mp3",
+      "filename": "17.mp3",
+      "english": "peh"
+    },
+    {
+      "position": 6,
+      "latin": "ye",
+      "cyrillic": "е",
+      "unicodeHex": "U+0435",
+      "originalFile": "5e.mp3",
+      "filename": "06.mp3",
+      "english": "yeh"
+    },
+    {
+      "position": 5,
+      "latin": "d",
+      "cyrillic": "д",
+      "unicodeHex": "U+0434",
+      "originalFile": "4d.mp3",
+      "filename": "05.mp3",
+      "english": "deh"
+    },
+    {
+      "position": 8,
+      "latin": "zh",
+      "cyrillic": "ж",
+      "unicodeHex": "U+0436",
+      "originalFile": "6g.mp3",
+      "filename": "08.mp3",
+      "english": "zheh"
+    },
+    {
+      "position": 7,
+      "latin": "yo",
+      "cyrillic": "ё",
+      "unicodeHex": "U+0451",
+      "originalFile": "6_1yo.mp3",
+      "filename": "07.mp3",
+      "english": "yo"
+    },
+    {
+      "position": 2,
+      "latin": "b",
+      "cyrillic": "б",
+      "unicodeHex": "U+0431",
+      "originalFile": "2b.mp3",
+      "filename": "02.mp3",
+      "english": "beh"
+    },
+    {
+      "position": 1,
+      "latin": "a",
+      "cyrillic": "а",
+      "unicodeHex": "U+0430",
+      "originalFile": "1a.mp3",
+      "filename": "01.mp3",
+      "english": "ah"
+    },
+    {
+      "position": 4,
+      "latin": "g",
+      "cyrillic": "г",
+      "unicodeHex": "U+0433",
+      "originalFile": "4g.mp3",
+      "filename": "04.mp3",
+      "english": "geh"
+    },
+    {
+      "position": 3,
+      "latin": "v",
+      "cyrillic": "в",
+      "unicodeHex": "U+0432",
+      "originalFile": "3v.mp3",
+      "filename": "03.mp3",
+      "english": "veh"
+    },
+    {
+      "position": 14,
+      "latin": "m",
+      "cyrillic": "м",
+      "unicodeHex": "U+043C",
+      "originalFile": "13m.mp3",
+      "filename": "14.mp3",
+      "english": "em"
+    },
+    {
+      "position": 13,
+      "latin": "l",
+      "cyrillic": "л",
+      "unicodeHex": "U+043B",
+      "originalFile": "12l.mp3",
+      "filename": "13.mp3",
+      "english": "el"
+    },
+    {
+      "position": 16,
+      "latin": "o",
+      "cyrillic": "о",
+      "unicodeHex": "U+043E",
+      "originalFile": "15p.mp3",
+      "filename": "16.mp3",
+      "english": "oh"
+    },
+    {
+      "position": 15,
+      "latin": "n",
+      "cyrillic": "н",
+      "unicodeHex": "U+043D",
+      "originalFile": "14n.mp3",
+      "filename": "15.mp3",
+      "english": "en"
+    },
+    {
+      "position": 10,
+      "latin": "i",
+      "cyrillic": "и",
+      "unicodeHex": "U+0438",
+      "originalFile": "8i.mp3",
+      "filename": "10.mp3",
+      "english": "ee"
+    },
+    {
+      "position": 9,
+      "latin": "z",
+      "cyrillic": "з",
+      "unicodeHex": "U+0437",
+      "originalFile": "7z.mp3",
+      "filename": "09.mp3",
+      "english": "zeh"
+    },
+    {
+      "position": 12,
+      "latin": "k",
+      "cyrillic": "к",
+      "unicodeHex": "U+043A",
+      "originalFile": "10k.mp3",
+      "filename": "12.mp3",
+      "english": "kah"
+    },
+    {
+      "position": 11,
+      "latin": "y",
+      "cyrillic": "й",
+      "unicodeHex": "U+0439",
+      "originalFile": "9y.mp3",
+      "filename": "11.mp3",
+      "english": "y"
+    }
+  ]
 }

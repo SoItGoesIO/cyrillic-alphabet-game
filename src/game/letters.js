@@ -31,9 +31,9 @@ export const LETTERS = [
   { cyrillic: 'Ь', latin: "'", sound: 'soft sign', audio: '30.mp3' },
   { cyrillic: 'Э', latin: 'E', sound: 'eh', audio: '31.mp3' },
   { cyrillic: 'Ю', latin: 'Yu', sound: 'yoo', audio: '32.mp3' },
-  { cyrillic: 'Я', latin: 'Ya', sound: 'yah', audio: '33.mp3' }
+  { cyrillic: 'Я', latin: 'Ya', sound: 'yah', audio: '33.mp3' },
 ];
 
 export function findLetter(cyrillic) {
-  return LETTERS.find(letter => letter.cyrillic === cyrillic);
+  return LETTERS.find((letter) => letter.cyrillic === cyrillic);
 }

@@ -15,21 +15,21 @@ export function mountGame(containerId) {
 export async function saveQuizResults(score, totalQuestions) {
   const perfectScore = score === totalQuestions * 10; // assuming 10 points per question
   const bonus = perfectScore ? 1 : 0;
-  
+
   try {
-    const { data, error } = await rpc('complete_quiz', { 
-      p_score: score, 
-      p_perfect_bonus: bonus 
+    const { data, error } = await rpc('complete_quiz', {
+      p_score: score,
+      p_perfect_bonus: bonus,
     });
-    
+
     if (error) throw error;
-    
+
     const result = Array.isArray(data) ? data[0] : data;
     return {
       sessionId: result.session_id,
       totalXP: result.new_total_xp,
       level: result.new_level,
-      wasePerfect: perfectScore
+      wasePerfect: perfectScore,
     };
   } catch (error) {
     console.error('Failed to save quiz results:', error);

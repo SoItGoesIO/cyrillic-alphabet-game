@@ -1,0 +1,19 @@
+# Environment files
+.env.local
+.env.private
+.env.production
+
+# Claude Code
+.claude/memory/
+CLAUDE.local.md
+
+# Supabase
+supabase/.temp/
+
+# Archives
+claude-*.tar.gz
+
+# Additional entries to ensure
+.husky/_
+.DS_Store
+Thumbs.db

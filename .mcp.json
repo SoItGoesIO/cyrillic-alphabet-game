@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "mcp-filesystem"],
+      "env": {}
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": ["-y", "mcp-puppeteer"],
+      "env": {}
+    }
+  }
+}
