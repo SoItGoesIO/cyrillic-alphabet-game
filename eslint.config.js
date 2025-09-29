@@ -15,13 +15,28 @@ export default [
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      },
       globals: {
         // Browser globals
         document: 'readonly',
         window: 'readonly',
         console: 'readonly',
         setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
         Audio: 'readonly',
+        navigator: 'readonly',
+        indexedDB: 'readonly',
+        crypto: 'readonly',
+        Blob: 'readonly',
+        URL: 'readonly',
+        alert: 'readonly',
+        confirm: 'readonly',
         // React globals (for react scripts)
         React: 'readonly',
         ReactDOM: 'readonly',

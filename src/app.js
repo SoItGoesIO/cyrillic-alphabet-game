@@ -5,6 +5,7 @@ import { fetchProfile } from './db/profiles.js';
 import { completeItemAndAwardXP } from './gamification/xp.js';
 import { mountCyrillicGame } from './game/CyrillicGame.js';
 import { toast } from './ui/render.js';
+import { GingkoApp } from './gingko/loader.js';
 
 async function renderHeader() {
   const header = document.querySelector('#xp-badge');
@@ -129,6 +130,7 @@ document.addEventListener('submit', async (e) => {
 
 // Game mounting
 let gameLoaded = false;
+let gingkoLoaded = false;
 
 function mountGame() {
   if (!gameLoaded) {
@@ -142,30 +144,81 @@ function mountGame() {
   }
 }
 
-// Game/Todo view management
+function mountGingko() {
+  if (!gingkoLoaded) {
+    try {
+      const gingkoContainer = document.getElementById('gingko-container');
+      if (gingkoContainer) {
+        const root = ReactDOM.createRoot(gingkoContainer);
+        root.render(React.createElement(GingkoApp));
+        gingkoLoaded = true;
+      }
+    } catch (error) {
+      console.error('Failed to mount Gingko Writer:', error);
+      toast('Failed to load Gingko Writer');
+    }
+  }
+}
+
+// View management (Todos/Game/Gingko)
 export function setupViewToggle() {
   const toggleBtn = document.getElementById('toggle-view');
   if (!toggleBtn) return;
 
-  toggleBtn.addEventListener('click', () => {
-    const todos = document.getElementById('todos');
-    const game = document.getElementById('game-container');
+  let currentView = 'todos'; // 'todos', 'game', 'gingko'
 
-    if (todos && game) {
-      if (todos.style.display === 'none') {
-        // Switch to Todos
-        todos.style.display = 'block';
-        game.style.display = 'none';
-        toggleBtn.textContent = 'Switch to Game';
-      } else {
-        // Switch to Game
-        todos.style.display = 'none';
-        game.style.display = 'block';
-        toggleBtn.textContent = 'Switch to Todos';
-        mountGame(); // Mount game when switching to it
-      }
+  const views = {
+    todos: {
+      element: document.getElementById('todos'),
+      label: 'Tasks',
+      nextView: 'game',
+      nextLabel: 'Switch to Game'
+    },
+    game: {
+      element: document.getElementById('game-container'),
+      label: 'Game',
+      nextView: 'gingko',
+      nextLabel: 'Switch to Writer'
+    },
+    gingko: {
+      element: document.getElementById('gingko-container'),
+      label: 'Writer',
+      nextView: 'todos',
+      nextLabel: 'Switch to Tasks'
     }
+  };
+
+  const switchToView = (viewName) => {
+    // Hide all views
+    Object.values(views).forEach(view => {
+      if (view.element) view.element.style.display = 'none';
+    });
+
+    // Show current view
+    const view = views[viewName];
+    if (view?.element) {
+      view.element.style.display = 'block';
+      currentView = viewName;
+
+      // Mount components as needed
+      if (viewName === 'game') {
+        mountGame();
+      } else if (viewName === 'gingko') {
+        mountGingko();
+      }
+
+      // Update button text
+      toggleBtn.textContent = view.nextLabel;
+    }
+  };
+
+  toggleBtn.addEventListener('click', () => {
+    const nextView = views[currentView]?.nextView || 'todos';
+    switchToView(nextView);
   });
+
+  // Initialize with todos view
+  switchToView('todos');
 }
 
 // Auth UI show/hide
