@@ -6,7 +6,11 @@
     "format": "prettier --write .",
     "typecheck": "tsc -p . || echo \"(skip typecheck: no tsconfig)\"",
     "test": "jest --passWithNoTests || echo \"(skip tests: no jest config)\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "mcp:local": "node scripts/switch-mcp.js local",
+    "mcp:remote": "node scripts/switch-mcp.js remote",
+    "mcp:both": "node scripts/switch-mcp.js both",
+    "mcp:test": "npx @modelcontextprotocol/server-postgres postgresql://postgres:postgres@127.0.0.1:54322/postgres"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

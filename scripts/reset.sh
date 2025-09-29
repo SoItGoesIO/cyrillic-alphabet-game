@@ -5,7 +5,7 @@ echo "🛑 Stopping Supabase..."
 npx supabase stop
 
 echo "🗑️  Resetting database..."
-npx supabase db reset --force
+npx supabase db reset
 
 echo "🚀 Starting Supabase..."
 npx supabase start

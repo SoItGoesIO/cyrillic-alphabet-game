@@ -1,4 +1,4 @@
-.PHONY: start stop status reset db-shell dev help logs ps db-dump
+.PHONY: start stop status reset db-shell dev help logs ps db-dump mcp-local mcp-remote mcp-both
 
 help: ## Show this help message
 	@echo "Available commands:"
@@ -38,3 +38,15 @@ ps: ## Show running Docker containers
 db-dump: ## Dump local database schema
 	@echo "Dumping local database schema..."
 	@PGPASSWORD=postgres pg_dump -h 127.0.0.1 -p 54322 -U postgres -d postgres --schema-only --no-owner --no-privileges
+
+mcp-local: ## Switch MCP to local Supabase
+	@node scripts/switch-mcp.js local
+	@echo "Restart Claude Code to apply changes"
+
+mcp-remote: ## Switch MCP to remote Supabase
+	@node scripts/switch-mcp.js remote
+	@echo "Restart Claude Code to apply changes"
+
+mcp-both: ## Switch MCP to both local and remote Supabase
+	@node scripts/switch-mcp.js both
+	@echo "Restart Claude Code to apply changes"
